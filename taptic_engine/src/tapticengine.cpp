@@ -6,7 +6,7 @@
 #include <dmsdk/sdk.h>
 
 #if defined(DM_PLATFORM_IOS)
-#include "taptic.h"
+#include "tapticengine.h"
 
 static int isSupported(lua_State* L) {
     bool status = TapticEngine_isSupported();
@@ -63,7 +63,6 @@ dmExtension::Result AppInitializeTaptic(dmExtension::AppParams* params)
 
 dmExtension::Result InitializeTaptic(dmExtension::Params* params)
 {
-    dmLogWarning("Registered %s (null) Extension\n", MODULE_NAME);
     return dmExtension::RESULT_OK;
 }
 

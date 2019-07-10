@@ -4,7 +4,7 @@
 #include "tapticengine.h"
 #include "UIKit/UIKit.h"
 
-bool DefReview_isSupported() {
+bool TapticEngine_isSupported() {
     if ([UINotificationFeedbackGenerator class]) {
         return YES;
     }
