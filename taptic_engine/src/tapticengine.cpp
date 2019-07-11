@@ -9,14 +9,21 @@
 #include "tapticengine.h"
 
 static int isSupported(lua_State* L) {
-    bool status = TapticEngine_isSupported();
+    bool status = TapticEngine_IsSupported();
     lua_pushboolean(L, status);
     return 1;
+}
+
+static int impact(lua_State* L) {
+	int strength = luaL_checkint(L, 1);
+    TapticEngine_Impact(strength);
+    return 0;
 }
 
 static const luaL_reg Module_methods[] =
 {
     {"isSupported", isSupported},
+    {"impact", impact},
     {0, 0}
 };
 
