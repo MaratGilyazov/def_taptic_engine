@@ -7,11 +7,15 @@
 @interface TapticEnginePlugin : NSObject{
 }
 + (TapticEnginePlugin*) shared;
+- (void) notification:(UINotificationFeedbackType) type;
+- (void) selection;
 - (void) impact:(UIImpactFeedbackStyle) style;
 + (BOOL) isSupport;
 @end
 
 @interface TapticEnginePlugin ()
+@property (nonatomic, strong) UINotificationFeedbackGenerator* notificationGenerator;
+@property (nonatomic, strong) UISelectionFeedbackGenerator* selectionGenerator;
 @property (nonatomic, strong) NSArray<UIImpactFeedbackGenerator*>* impactGenerators;
 @end
 
@@ -31,6 +35,12 @@ static TapticEnginePlugin * _shared;
 - (id) init {
     if (self = [super init])
     {        
+        self.notificationGenerator = [UINotificationFeedbackGenerator new];
+        [self.notificationGenerator prepare];
+        
+        self.selectionGenerator = [UISelectionFeedbackGenerator new];
+        [self.selectionGenerator prepare];
+
         self.impactGenerators = @[
              [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight],
              [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium],
@@ -44,7 +54,17 @@ static TapticEnginePlugin * _shared;
 }
 
 - (void) dealloc {
+    self.notificationGenerator = NULL;
+    self.selectionGenerator = NULL;
     self.impactGenerators = NULL;
+}
+
+- (void) notification:(UINotificationFeedbackType)type {
+    [self.notificationGenerator notificationOccurred:type];
+}
+
+- (void) selection {
+    [self.selectionGenerator selectionChanged];
 }
 
 - (void) impact:(UIImpactFeedbackStyle)style {
@@ -65,8 +85,15 @@ bool TapticEngine_IsSupported() {
 }
 
 void TapticEngine_Impact(ImpactStyle style) {
-    int strength = (int) style;
-    [[TapticEnginePlugin shared] impact:(UIImpactFeedbackStyle) strength];
+    [[TapticEnginePlugin shared] impact:(UIImpactFeedbackStyle) style];
+}
+
+void TapticEngine_Notification(NotificationType type) {
+    [[TapticEnginePlugin shared] notification:(UINotificationFeedbackType) type];
+}
+
+void TapticEngine_Selection() {
+	[[TapticEnginePlugin shared] selection];
 }
 
 #endif

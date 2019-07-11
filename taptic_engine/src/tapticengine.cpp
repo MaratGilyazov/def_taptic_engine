@@ -20,10 +20,23 @@ static int impact(lua_State* L) {
     return 0;
 }
 
+static int notification(lua_State* L) {
+    NotificationType type = (NotificationType) luaL_checkint(L, 1);
+    TapticEngine_Notification(type);
+    return 0;
+}
+
+static int selection(lua_State* L) {
+    TapticEngine_Selection();
+    return 0;
+}
+
 static const luaL_reg Module_methods[] =
 {
     {"isSupported", isSupported},
     {"impact", impact},
+    {"notification", notification},
+    {"selection", selection},
     {0, 0}
 };
 
@@ -40,9 +53,9 @@ static void LuaInit(lua_State* L)
     SETCONSTANT(IMPACT_MEDIUM)
     SETCONSTANT(IMPACT_HEAVY)
 
-    //SETCONSTANT(NOTIFICATION_SUCCESS)
-    //SETCONSTANT(NOTIFICATION_WARNING)
-    //SETCONSTANT(NOTIFICATION_ERROR)
+    SETCONSTANT(NOTIFICATION_SUCCESS)
+    SETCONSTANT(NOTIFICATION_WARNING)
+    SETCONSTANT(NOTIFICATION_ERROR)
 
 #undef SETCONSTANT
 
