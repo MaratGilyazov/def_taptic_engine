@@ -7,7 +7,7 @@
 @interface TapticEnginePlugin : NSObject{
 }
 + (TapticEnginePlugin*) shared;
-- (void) impact:(UIImpactFeedbackStyle) strength;
+- (void) impact:(UIImpactFeedbackStyle) style;
 + (BOOL) isSupport;
 @end
 
@@ -64,13 +64,8 @@ bool TapticEngine_IsSupported() {
     return [TapticEnginePlugin isSupport];
 }
 
-void TapticEngine_Impact(int strength) {
-	if (strength < 0) {
-		strength = 0;
-	}
-	if (strength > 2) {
-		strength = 2;
-	}
+void TapticEngine_Impact(ImpactStyle style) {
+    int strength = (int) style;
     [[TapticEnginePlugin shared] impact:(UIImpactFeedbackStyle) strength];
 }
 

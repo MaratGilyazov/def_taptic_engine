@@ -15,8 +15,8 @@ static int isSupported(lua_State* L) {
 }
 
 static int impact(lua_State* L) {
-	int strength = luaL_checkint(L, 1);
-    TapticEngine_Impact(strength);
+    ImpactStyle style = (ImpactStyle) luaL_checkint(L, 1);
+    TapticEngine_Impact(style);
     return 0;
 }
 
@@ -31,6 +31,21 @@ static void LuaInit(lua_State* L)
 {
     int top = lua_gettop(L);
     luaL_register(L, MODULE_NAME, Module_methods);
+
+#define SETCONSTANT(name) \
+        lua_pushnumber(L, (lua_Number) name); \
+        lua_setfield(L, -2, #name);\
+
+    SETCONSTANT(IMPACT_LIGHT)
+    SETCONSTANT(IMPACT_MEDIUM)
+    SETCONSTANT(IMPACT_HEAVY)
+
+    //SETCONSTANT(NOTIFICATION_SUCCESS)
+    //SETCONSTANT(NOTIFICATION_WARNING)
+    //SETCONSTANT(NOTIFICATION_ERROR)
+
+#undef SETCONSTANT
+
     lua_pop(L, 1);
     assert(top == lua_gettop(L));
 }
@@ -52,11 +67,6 @@ dmExtension::Result AppFinalizeTaptic(dmExtension::AppParams* params)
 }
 
 dmExtension::Result FinalizeTaptic(dmExtension::Params* params)
-{
-    return dmExtension::RESULT_OK;
-}
-
-static dmExtension::Result UpdateTaptic(dmExtension::Params* params)
 {
     return dmExtension::RESULT_OK;
 }
@@ -83,11 +93,7 @@ dmExtension::Result FinalizeTaptic(dmExtension::Params* params)
     return dmExtension::RESULT_OK;
 }
 
-static dmExtension::Result UpdateTaptic(dmExtension::Params* params)
-{
-    return dmExtension::RESULT_OK;
-}
 #endif
 
 
-DM_DECLARE_EXTENSION(EXTENSION_NAME, LIB_NAME, AppInitializeTaptic, AppFinalizeTaptic, InitializeTaptic, UpdateTaptic, 0, FinalizeTaptic)
+DM_DECLARE_EXTENSION(EXTENSION_NAME, LIB_NAME, AppInitializeTaptic, AppFinalizeTaptic, InitializeTaptic, 0, 0, FinalizeTaptic)
