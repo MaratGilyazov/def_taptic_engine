@@ -12,8 +12,7 @@ Open your game.project file and in the dependencies field under project add:
 ```lua
 if (taptic_engine and taptic_engine.isSupported()) then
   -- impact strength can be one of 3 values: 0 -> light, 1 -> medium, 2 -> heavy
-  strength = 0 
-  taptic_engine.impact(strength)
+  taptic_engine.impact(0)
 else
   --do something else
 end
@@ -22,5 +21,5 @@ end
 ## LUA Api
 #### taptic_engine.isSupported()
 Is feature supprorted (actually, right now this does not seem working correctly and returns "true" even on iPhone5, but it's not breaking; there is no safe way to check if taptic is supported)
-#### defreview.impact(int strength)
+#### taptic_engine.impact(int strength)
 Call Taptic Engine impact with given strength (style): 0 -> light, 1 -> medium, 2 -> heavy
