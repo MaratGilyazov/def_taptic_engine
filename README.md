@@ -38,7 +38,9 @@ Call Taptic Engine Notification feedback with given type - one of 3 constants: t
 Call Taptic Engine Selection feedback
 
 ## Notes
-#### taptic_engine.isSupported() - right now this does not seem working correctly and returns "true" even on iPhone5, but it's not breaking; there is no safe way to check if taptic is supported)
-#### prepare() - there is API to "prepare" taptic engine for further feedback calls, in actual implementation it's called once on first call to any of taptic_engine methods and there is no way to controll it manually
+#### taptic_engine.isSupported() 
+Right now this does not seem working correctly and returns "true" even on iPhone5, but it's not breaking; there is no safe way to check if taptic is supported)
+#### prepare() 
+There is API to "prepare" taptic engine for further feedback calls, in actual implementation it's called once on first call to any of taptic_engine methods and there is no way to controll it manually
 
 iOS part is based on [iOS TAPTIC Engine Bridge for Unity](https://github.com/asus4/unity-taptic-plugin) by Koki Ibukuro
