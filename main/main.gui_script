@@ -1,0 +1,98 @@
+--[[
+
+if (taptic_engine and taptic_engine.isSupported()) then
+
+	taptic_engine.impact(taptic_engine.IMPACT_LIGHT)
+	taptic_engine.impact(taptic_engine.IMPACT_MEDIUM)
+	taptic_engine.impact(taptic_engine.IMPACT_HEAVY)
+
+	taptic_engine.notification(taptic_engine.NOTIFICATION_SUCCESS)
+	taptic_engine.notification(taptic_engine.NOTIFICATION_WARNING)
+	taptic_engine.notification(taptic_engine.NOTIFICATION_ERROR)
+
+	taptic_engine.selection()
+
+else
+	--do something else
+end
+
+--]]
+
+local dl = require("dirtylarry.dirtylarry")
+
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+
+	local status_text = ""
+	local status_color = vmath.vector4(0, 1, 0, 1)
+	if not taptic_engine.isSupported then
+		status_text = "taptic_engine table not available"
+		status_color = vmath.vector4(1, 0, 0, 1)
+	else
+		local supported = taptic_engine.isSupported()
+		status_text = "taptic_engine.isSupported(): " .. tostring(supported)
+		if not supported then
+			status_color = vmath.vector4(1, 0, 0, 1)
+		end
+	end
+
+	gui.set_text(gui.get_node("status"), status_text)
+	gui.set_color(gui.get_node("status"), status_color)
+end
+
+-- if taptic_engine table not available, setup a null implementation
+if not taptic_engine then
+	taptic_engine = {}
+	taptic_engine.IMPACT_LIGHT = 1
+	taptic_engine.IMPACT_MEDIUM = 2
+	taptic_engine.IMPACT_HEAVY = 3
+	taptic_engine.NOTIFICATION_SUCCESS = 1
+	taptic_engine.NOTIFICATION_WARNING = 2
+	taptic_engine.NOTIFICATION_ERROR = 3
+
+	local null_func = function(func_name, ...)
+		print("[null implementation] taptic_engine." .. func_name .. "(", ..., ")")
+	end
+
+	local wrap = function(func_name, f)
+		return function(...)
+			return f(func_name, ...)
+		end
+	end
+
+	taptic_engine.impact = wrap("impact", null_func)
+	taptic_engine.notification = wrap("notification", null_func)
+	taptic_engine.selection = wrap("selection", null_func)
+end
+
+function on_input(self, action_id, action)
+
+	dl.button(self, "impact_light", action_id, action, function()
+		taptic_engine.impact(taptic_engine.IMPACT_LIGHT)
+	end)
+
+	dl.button(self, "impact_medium", action_id, action, function()
+		taptic_engine.impact(taptic_engine.IMPACT_MEDIUM)
+	end)
+
+	dl.button(self, "impact_heavy", action_id, action, function()
+		taptic_engine.impact(taptic_engine.IMPACT_HEAVY)
+	end)
+
+	dl.button(self, "notification_success", action_id, action, function()
+		taptic_engine.notification(taptic_engine.NOTIFICATION_SUCCESS)
+	end)
+
+	dl.button(self, "notification_warning", action_id, action, function()
+		taptic_engine.notification(taptic_engine.NOTIFICATION_WARNING)
+	end)
+
+	dl.button(self, "notification_error", action_id, action, function()
+		taptic_engine.notification(taptic_engine.NOTIFICATION_ERROR)
+	end)
+
+	dl.button(self, "selection", action_id, action, function()
+		taptic_engine.selection()
+	end)
+end

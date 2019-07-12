@@ -13,8 +13,11 @@ input_method = HiddenInputField
 
 [project]
 title = TapticEngine
-version = 1.1
+dependencies = https://github.com/andsve/dirtylarry/archive/master.zip
 
 [library]
 include_dirs = taptic_engine
+
+[ios]
+bundle_identifier = com.MaratGilyazov.taptic_engine
 
