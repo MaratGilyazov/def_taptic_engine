@@ -2,6 +2,8 @@
 
 This is a small native extension for [Defold engine](http://www.defold.com) which allows to use [iOS Taptic Engine](https://developer.apple.com/documentation/uikit/uifeedbackgenerator).
 
+![](images/example.png)
+
 ## Installation
 
 You can use the DefTapticEngine extension in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/).
