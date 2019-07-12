@@ -85,15 +85,21 @@ bool TapticEngine_IsSupported() {
 }
 
 void TapticEngine_Impact(ImpactStyle style) {
-    [[TapticEnginePlugin shared] impact:(UIImpactFeedbackStyle) style];
+	if (TapticEngine_IsSupported()) {
+    	[[TapticEnginePlugin shared] impact:(UIImpactFeedbackStyle) style];
+	}
 }
 
 void TapticEngine_Notification(NotificationType type) {
-    [[TapticEnginePlugin shared] notification:(UINotificationFeedbackType) type];
+    if (TapticEngine_IsSupported()) {
+    	[[TapticEnginePlugin shared] notification:(UINotificationFeedbackType) type];
+    }
 }
 
 void TapticEngine_Selection() {
-	[[TapticEnginePlugin shared] selection];
+	if (TapticEngine_IsSupported()) {
+    	[[TapticEnginePlugin shared] selection];
+    }
 }
 
 #endif
