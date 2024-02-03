@@ -1,0 +1,42 @@
+- name: taptic_engine
+  type: table
+  desc: Native extension for Defold with Taptic Engine implementation for iOS
+  members:
+    - name: isSupported
+      type: function
+      desc: Returns bool flag saying if taptic engine is supported
+      returns:
+        - name: supported
+          type: boolean
+    - name: impact
+      type: function
+      desc:
+        Call Taptic Engine Impact feedback with given style - one of 3 constants
+        `taptic_engine.IMPACT_LIGHT`, `taptic_engine.IMPACT_MEDIUM`,
+        `taptic_engine.IMPACT_HEAVY`
+      parameters:
+        - name: style
+          type: number
+    - name: notification
+      type: function
+      desc: Call Taptic Engine Notification feedback with given type - one of 3
+        constants `taptic_engine.NOTIFICATION_SUCCESS`,
+        `taptic_engine.NOTIFICATION_WARNING`, `taptic_engine.NOTIFICATION_ERROR`
+      parameters:
+        - name: type
+          type: number
+    - name: selection
+      type: function
+      desc: Call Taptic Engine Selection feedback
+    - name: IMPACT_LIGHT
+      type: number
+    - name: IMPACT_MEDIUM
+      type: number
+    - name: IMPACT_HEAVY
+      type: number
+    - name: NOTIFICATION_SUCCESS
+      type: number
+    - name: NOTIFICATION_WARNING
+      type: number
+    - name: NOTIFICATION_ERROR
+      type: number
